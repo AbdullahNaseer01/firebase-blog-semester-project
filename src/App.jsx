@@ -8,6 +8,7 @@ import AddEditBlog from './pages/AddEditBlog'
 import Details from './pages/Details'
 import NoteFound from './pages/NoteFound'
 import Contact from './pages/Contact'
+import Auth from './pages/Auth'
 // import Routes from './pages/Routes'
 function App() {
   // const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
     <Route path='/create' element={<AddEditBlog/>}/>
     <Route path='/edit/:id' element={<AddEditBlog/>}/>
     <Route path='/detail/:id' element={<Details/>}/>
+    <Route path='/auth' element={<Auth/>}/>
     <Route path='*' element={<NoteFound/>}/>
     </Routes>
     // <>
