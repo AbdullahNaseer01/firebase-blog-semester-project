@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logo from '../assets/logo-no-background.png'
 const Header = () => {
   return (
@@ -9,10 +10,10 @@ const Header = () => {
             <img src={logo} alt="img" className="w-40 h-10" />
           </a>
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a className="mr-5 hover:text-gray-900">Home</a>
-            <a className="mr-5 hover:text-gray-900">About</a>
-            <a className="mr-5 hover:text-gray-900">Create</a>
-            <a className="mr-5 hover:text-gray-900">contact</a>
+            <Link to="/" className="mr-5 hover:text-gray-900">Home</Link>
+            <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
+            <Link to="/create" className="mr-5 hover:text-gray-900">Create</Link>
+            <Link to="/contact" className="mr-5 hover:text-gray-900">contact</Link>
           </nav>
           <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
             Button
