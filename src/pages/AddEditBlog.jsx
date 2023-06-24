@@ -5,7 +5,7 @@ import Header from '../components/Header'
 const AddEditBlog = () => {
   return (
     <div className='layoutContainer'>
-      <Header/>
+      {/* <Header/> */}
       <div className="content">
         <h1 className="text-center">Add and Edit page a dynamic page</h1>
       </div>

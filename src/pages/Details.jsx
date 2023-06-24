@@ -5,7 +5,7 @@ import Header from '../components/Header'
 const Details = () => {
   return (
     <div className='layoutContainer'>
-      <Header/>
+      {/* <Header/> */}
       <div className='content'><h1 className='text-center'>Details page dynamic page</h1></div>
       <Footer/>
     </div>

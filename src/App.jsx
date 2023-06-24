@@ -6,12 +6,14 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebase";
+import { signOut } from "firebase/auth";
 import About from './pages/About'
 import AddEditBlog from './pages/AddEditBlog'
 import Details from './pages/Details'
 import NoteFound from './pages/NoteFound'
 import Contact from './pages/Contact'
 import Auth from './pages/Auth'
+import Header from './components/Header';
 function App() {
 
   const [user, setUser] = useState(null);
@@ -37,6 +39,7 @@ function App() {
 
   return (
     <>
+    <Header user={user} handleLogout={handleLogout} />
     <ToastContainer position="top-center" />
     <Routes>
     <Route path='/' element={<Home/>}/>

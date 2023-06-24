@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 const Contact = () => {
   return (
     <>
-    <Header/>
+    {/* <Header/> */}
     <section className="text-gray-600 body-font relative">
   <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
     <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
