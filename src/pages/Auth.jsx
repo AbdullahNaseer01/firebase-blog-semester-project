@@ -4,7 +4,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,7 @@ const initialState = {
   confirmPassword: "",
 };
 
-const Auth = ({ setActive, setUser }) => {
+const Auth = ({ setUser }) => {
   const [state, setState] = useState(initialState);
   const [signUp, setSignUp] = useState(false);
 
@@ -32,19 +33,23 @@ const Auth = ({ setActive, setUser }) => {
     e.preventDefault();
     if (!signUp) {
       if (email && password) {
-        const { user } = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        setUser(user);
-        setActive("home");
+        try {
+          const { user } = await signInWithEmailAndPassword(auth, email, password);
+          setUser(user);
+    navigate("/");
+        } catch (error) {
+          toast.error("Invalid email or password");
+          return
+        }
       } else {
         return toast.error("All fields are mandatory to fill");
       }
     } else {
       if (password !== confirmPassword) {
         return toast.error("Password don't match");
+      }
+      if(password.length < 6 ) {
+        return toast.error("Password must be 6 characters")
       }
       if (firstName && lastName && email && password) {
         const { user } = await createUserWithEmailAndPassword(
@@ -53,131 +58,15 @@ const Auth = ({ setActive, setUser }) => {
           password
         );
         await updateProfile(user, { displayName: `${firstName} ${lastName}` });
-        // setActive("home");
+      
       } else {
         return toast.error("All fields are mandatory to fill");
       }
     }
-    navigate("/");
+    // navigate("/");
   };
 
   return (
-    // <div className="container-fluid mb-4">
-    //   <div className="container">
-    //     <div className="col-12 text-center">
-    //       <div className="text-center heading py-2">
-    //         {!signUp ? "Sign-In" : "Sign-Up"}
-    //       </div>
-    //     </div>
-    //     <div className="row h-100 justify-content-center align-items-center">
-    //       <div className="col-10 col-md-8 col-lg-6">
-    //         <form className="row" onSubmit={handleAuth}>
-    //           {signUp && (
-    //             <>
-    //               <div className="col-6 py-3">
-    //                 <input
-    //                   type="text"
-    //                   className="form-control input-text-box"
-    //                   placeholder="First Name"
-    //                   name="firstName"
-    //                   value={firstName}
-    //                   onChange={handleChange}
-    //                 />
-    //               </div>
-    //               <div className="col-6 py-3">
-    //                 <input
-    //                   type="text"
-    //                   className="form-control input-text-box"
-    //                   placeholder="Last Name"
-    //                   name="lastName"
-    //                   value={lastName}
-    //                   onChange={handleChange}
-    //                 />
-    //               </div>
-    //             </>
-    //           )}
-    //           <div className="col-12 py-3">
-    //             <input
-    //               type="email"
-    //               className="form-control input-text-box"
-    //               placeholder="Email"
-    //               name="email"
-    //               value={email}
-    //               onChange={handleChange}
-    //             />
-    //           </div>
-    //           <div className="col-12 py-3">
-    //             <input
-    //               type="password"
-    //               className="form-control input-text-box"
-    //               placeholder="Password"
-    //               name="password"
-    //               value={password}
-    //               onChange={handleChange}
-    //             />
-    //           </div>
-    //           {signUp && (
-    //             <div className="col-12 py-3">
-    //               <input
-    //                 type="password"
-    //                 className="form-control input-text-box"
-    //                 placeholder="Confirm Password"
-    //                 name="confirmPassword"
-    //                 value={confirmPassword}
-    //                 onChange={handleChange}
-    //               />
-    //             </div>
-    //           )}
-
-    //           <div className="col-12 py-3 text-center">
-    //             <button
-    //               className={`btn ${!signUp ? "btn-sign-in" : "btn-sign-up"}`}
-    //               type="submit"
-    //             >
-    //               {!signUp ? "Sign-in" : "Sign-up"}
-    //             </button>
-    //           </div>
-    //         </form>
-    //         <div>
-    //           {!signUp ? (
-    //             <>
-    //               <div className="text-center justify-content-center mt-2 pt-2">
-    //                 <p className="small fw-bold mt-2 pt-1 mb-0">
-    //                   Don't have an account ?&nbsp;
-    //                   <span
-    //                     className="link-danger"
-    //                     style={{ textDecoration: "none", cursor: "pointer" }}
-    //                     onClick={() => setSignUp(true)}
-    //                   >
-    //                     Sign Up
-    //                   </span>
-    //                 </p>
-    //               </div>
-    //             </>
-    //           ) : (
-    //             <>
-    //               <div className="text-center justify-content-center mt-2 pt-2">
-    //                 <p className="small fw-bold mt-2 pt-1 mb-0">
-    //                   Already have an account ?&nbsp;
-    //                   <span
-    //                     style={{
-    //                       textDecoration: "none",
-    //                       cursor: "pointer",
-    //                       color: "#298af2",
-    //                     }}
-    //                     onClick={() => setSignUp(false)}
-    //                   >
-    //                     Sign In
-    //                   </span>
-    //                 </p>
-    //               </div>
-    //             </>
-    //           )}
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="bg-gray-100 min-h-screen flex justify-center items-center">
   <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
     <h2 className="text-2xl text-center font-bold mb-4">
