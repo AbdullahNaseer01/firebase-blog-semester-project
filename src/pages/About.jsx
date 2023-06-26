@@ -1,5 +1,5 @@
 import React from "react";
-import { IoIosArrowDropdownCircle } from 'react-icons/io';
+import { IoIosArrowDropdownCircle } from "react-icons/io";
 import aboutImg from "../assets/aboutImg.gif";
 import Faisal from "../assets/mrFaisal.png";
 import Abdullah from "../assets/mrAbdullah.png";
@@ -11,9 +11,8 @@ const About = () => {
       <div className="content">
         {/* the about section  */}
         <section className="text-gray-600 body-font">
-          <div className="container mx-auto flex px-5 py-20 md:flex-row flex-col items-center">
+          <div className="container mx-auto flex px-5 py-16 md:flex-row flex-col items-center">
             <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-
               <img
                 className="object-cover object-center rounded h-max "
                 src={aboutImg}
@@ -22,22 +21,22 @@ const About = () => {
             </div>
             <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
               <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-                Before they sold out
+                Who We Are ?
                 <br className="hidden lg:inline-block" />
-                readymade gluten
+                {/* readymade gluten */}
               </h1>
               <p className="mb-8 leading-relaxed">
-                Copper mug try-hard pitchfork pour-over freegan heirloom neutra
-                air plant cold-pressed tacos poke beard tote bag. Heirloom echo
-                park mlkshk tote bag selvage hot chicken authentic tumeric
-                truffaut hexagon try-hard chambray.
+                Welcome to our website! We are a team of highly skilled software
+                engineers specializing in web development, software solutions,
+                digital marketing, UI/UX designing, and accounts management.
+                With our expertise and professionalism, we provide top-notch
+                services to meet all your technology needs.
               </p>
-              <div class="flex justify-center items-center">
-  <button class="text-5xl animate-bounce">
-    <IoIosArrowDropdownCircle/>
-  </button>
-</div>
-
+              <div className="flex justify-center items-center mt-7">
+                <button className="text-5xl animate-bounce">
+                  <IoIosArrowDropdownCircle />
+                </button>
+              </div>
             </div>
           </div>
         </section>
