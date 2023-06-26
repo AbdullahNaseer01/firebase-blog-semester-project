@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { db, storage } from "../firebase";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import {
   addDoc,
   collection,
@@ -47,6 +43,10 @@ const AddEditBlog = ({ user, setActive }) => {
 
   const { title, tags, category, trending, description } = form;
 
+  const isUserAvailable = user !== null; // Check if user is available
+
+  
+  
   useEffect(() => {
     const uploadFile = () => {
       const storageRef = ref(storage, file.name);
@@ -80,9 +80,19 @@ const AddEditBlog = ({ user, setActive }) => {
         }
       );
     };
-
-    file && uploadFile();
-  }, [file]);
+  
+    const isUserAvailable = user !== null; // Check if user is available
+  
+    // Check if user is available and file is selected
+    if (isUserAvailable && file) {
+      uploadFile();
+    } else if (file && !isUserAvailable) {
+      // Clear the file selection if user is not logged in
+      setFile(null);
+      toast.error("Login first to perform this action");
+    }
+  }, [file, user]);
+  
 
   useEffect(() => {
     id && getBlogDetail();
@@ -103,6 +113,7 @@ const AddEditBlog = ({ user, setActive }) => {
   };
 
   const handleTags = (tags) => {
+    e.preventDefault();
     setForm({ ...form, tags });
   };
 
@@ -116,37 +127,58 @@ const AddEditBlog = ({ user, setActive }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if all required form fields have values
     if (category && tags && title && description && trending) {
-      if (!id) {
-        try {
-          await addDoc(collection(db, "blogs"), {
-            ...form,
-            timestamp: serverTimestamp(),
-            author: user.displayName,
-            userId: user.uid,
-          });
-          toast.success("Blog created successfully");
-        } catch (err) {
-          console.log(err);
+      // Check if a user object exists
+      if (user) {
+        // Check if id is falsy, indicating creation of a new blog
+        if (!id) {
+          try {
+            // Add a new document to the "blogs" collection
+            await addDoc(collection(db, "blogs"), {
+              ...form,
+              timestamp: serverTimestamp(),
+              author: user.displayName,
+              userId: user.uid,
+            });
+            toast.success("Blog created successfully");
+
+            // Navigate to the root ("/") page
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+        toast.error("Check your Internet Connection");
+
+          }
+        } else {
+          try {
+            // Update an existing document in the "blogs" collection
+            await updateDoc(doc(db, "blogs", id), {
+              ...form,
+              timestamp: serverTimestamp(),
+              author: user.displayName,
+              userId: user.uid,
+            });
+            toast.success("Blog updated successfully");
+
+            // Navigate to the root ("/") page
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+        toast.error("Check your Internet Connection");
+
+          }
         }
       } else {
-        try {
-          await updateDoc(doc(db, "blogs", id), {
-            ...form,
-            timestamp: serverTimestamp(),
-            author: user.displayName,
-            userId: user.uid,
-          });
-          toast.success("Blog updated successfully");
-        } catch (err) {
-          console.log(err);
-        }
+        // User not logged in, navigate to "/auth" page
+        toast.error("Login or Signup to perform THis Task");
+        navigate("/auth");
       }
     } else {
-      return toast.error("All fields are mandatory to fill");
+      // Display an error message if any required field is missing
+      toast.error("All fields are mandatory to fill");
     }
-
-    navigate("/");
   };
 
   return (
@@ -269,6 +301,7 @@ const AddEditBlog = ({ user, setActive }) => {
                 <div className="mb-4">
                   <input
                     type="file"
+                    disabled={!isUserAvailable}
                     className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
                     onChange={(e) => setFile(e.target.files[0])}
                   />
@@ -277,7 +310,7 @@ const AddEditBlog = ({ user, setActive }) => {
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
-                    disabled={progress !== null && progress < 100}
+                    // disabled={progress !== null && progress < 100}
                   >
                     {id ? "Update" : "Submit"}
                   </button>

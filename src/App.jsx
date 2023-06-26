@@ -46,8 +46,8 @@ function App() {
     <Route path='/' element={<Home/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/contact' element={<Contact/>}/>
-    <Route path='/create' element={<AddEditBlog/>}/>
-    <Route path='/edit/:id' element={<AddEditBlog/>}/>
+    <Route path='/create' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/"/>}/>
+    <Route path='/edit/:id' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/"/>}/>
     <Route path='/detail/:id' element={<Details/>}/>
     <Route
           path="/auth"
