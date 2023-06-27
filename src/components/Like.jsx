@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useTooltip } from "react-use-tooltip";
+// import { useTooltip } from "react-use-tooltip";
 
 const Like = ({ handleLike, likes, userId }) => {
   useEffect(() => {

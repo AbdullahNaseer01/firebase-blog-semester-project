@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { excerpt } from "../utility";
-import { BiThumbsUp, BiChat } from 'react-icons/bi';
+import { BiChat } from 'react-icons/bi';
+import {BsFillHandThumbsUpFill} from 'react-icons/bs'
 
 const Card = ({ title, description, imgUrl, id, likes, comments }) => {
   return (
@@ -18,9 +19,9 @@ const Card = ({ title, description, imgUrl, id, likes, comments }) => {
               <span className="text-primary">Read More</span>
             </Link>
             <div>
-              <BiThumbsUp className="m-2" />
+              <BsFillHandThumbsUpFill className="m-2" />
               {likes.length}
-              <BiChat className="m-2" />
+            <BiChat className="m-2" />
               {comments.length}
             </div>
           </div>
