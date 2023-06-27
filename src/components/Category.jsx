@@ -4,7 +4,7 @@ import { FiChevronRight } from 'react-icons/fi';
 
 const Category = ({ catgBlogsCount }) => {
   return (
-    <div className="widget">
+    <div className="widget ml-auto ">
       <div className="blog-heading text-start py-2 mb-4 text-2xl font-bold">Category</div>
       <div className="link-widget">
         <ul>
