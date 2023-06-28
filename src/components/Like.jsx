@@ -17,10 +17,10 @@ const Like = ({ handleLike, likes, userId }) => {
       );
     }
     return (
-      <>
+      <div className="flex justify-between bg-slate-300 p-2 rounded-md mr-3 ">
         <BsHandThumbsUp />
-        &nbsp;Like
-      </>
+        {/* &nbsp;Like */}
+      </div>
     );
   };
 

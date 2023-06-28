@@ -12,6 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import DOMPurify from "dompurify";
 
 const initialState = {
   title: "",
@@ -36,6 +37,7 @@ const AddEditBlog = ({ user, setActive }) => {
   const [form, setForm] = useState(initialState);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
+  const [sanitizedContent, setSanitizedContent] = useState("");
 
   const { id } = useParams();
 
@@ -45,8 +47,6 @@ const AddEditBlog = ({ user, setActive }) => {
 
   const isUserAvailable = user !== null; // Check if user is available
 
-  
-  
   useEffect(() => {
     const uploadFile = () => {
       const storageRef = ref(storage, file.name);
@@ -80,19 +80,16 @@ const AddEditBlog = ({ user, setActive }) => {
         }
       );
     };
-  
-    const isUserAvailable = user !== null; // Check if user is available
-  
+
     // Check if user is available and file is selected
     if (isUserAvailable && file) {
       uploadFile();
     } else if (file && !isUserAvailable) {
-      // Clear the file selection if user is not logged in
+      // Clear the file selection if the user is not logged in
       setFile(null);
       toast.error("Login first to perform this action");
     }
   }, [file, user]);
-  
 
   useEffect(() => {
     id && getBlogDetail();
@@ -125,6 +122,11 @@ const AddEditBlog = ({ user, setActive }) => {
     setForm({ ...form, category: e.target.value });
   };
 
+  const handleEditorChange = (content) => {
+    setForm({ ...form, description: content });
+    setSanitizedContent(DOMPurify.sanitize(content));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -132,7 +134,7 @@ const AddEditBlog = ({ user, setActive }) => {
     if (category && tags && title && description && trending) {
       // Check if a user object exists
       if (user) {
-        // Check if id is falsy, indicating creation of a new blog
+        // Check if id is falsy, indicating the creation of a new blog
         if (!id) {
           try {
             // Add a new document to the "blogs" collection
@@ -148,8 +150,7 @@ const AddEditBlog = ({ user, setActive }) => {
             navigate("/");
           } catch (err) {
             console.log(err);
-        toast.error("Check your Internet Connection");
-
+            toast.error("Check your Internet Connection");
           }
         } else {
           try {
@@ -166,13 +167,12 @@ const AddEditBlog = ({ user, setActive }) => {
             navigate("/");
           } catch (err) {
             console.log(err);
-        toast.error("Check your Internet Connection");
-
+            toast.error("Check your Internet Connection");
           }
         }
       } else {
         // User not logged in, navigate to "/auth" page
-        toast.error("Login or Signup to perform THis Task");
+        toast.error("Login or Signup to perform this task");
         navigate("/auth");
       }
     } else {
@@ -293,9 +293,7 @@ const AddEditBlog = ({ user, setActive }) => {
                         alignleft aligncenter alignright alignjustify | \
                         bullist numlist outdent indent | removeformat | help",
                     }}
-                    onEditorChange={(content) =>
-                      setForm({ ...form, description: content })
-                    }
+                    onEditorChange={handleEditorChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -310,7 +308,6 @@ const AddEditBlog = ({ user, setActive }) => {
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
-                    // disabled={progress !== null && progress < 100}
                   >
                     {id ? "Update" : "Submit"}
                   </button>
@@ -325,3 +322,4 @@ const AddEditBlog = ({ user, setActive }) => {
 };
 
 export default AddEditBlog;
+

@@ -12,6 +12,7 @@
   "dependencies": {
     "@pathofdev/react-tag-input": "^1.0.7",
     "@tinymce/tinymce-react": "^4.3.0",
+    "dompurify": "^3.0.3",
     "firebase": "^9.22.2",
     "fontawesome": "^5.6.3",
     "lodash": "^4.17.21",
