@@ -63,14 +63,15 @@
 
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import logo from "../assets/logo-no-background.png";
+import { toast } from "react-toastify";
 
 const Header = ({ user, handleLogout }) => {
   const userId = user?.uid;
   const displayName = user?.displayName;
   const firstName = displayName ? displayName.split(" ")[0] : "";
-
+  const navigate = useNavigate();
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -80,7 +81,23 @@ const Header = ({ user, handleLogout }) => {
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
           <Link to="/" className="mr-5 hover:text-gray-900">Home</Link>
           <Link to="/about" className="mr-5 hover:text-gray-900">About</Link>
-          <Link to="/create" className="mr-5 hover:text-gray-900">Create</Link>
+          <Link
+        to={user ? "/create" : "/auth"}
+        className="mr-5 hover:text-gray-900"
+        onClick={(event) => {
+          if (!user) {
+            event.preventDefault();
+            toast.error("Please log in to access this page.", {
+              position: "top-center",
+              onClose: () => {
+                navigate("/auth");
+              },
+            });
+          }
+        }}
+      >
+        Create
+      </Link>
           <Link to="/contact" className="mr-5 hover:text-gray-900">Contact</Link>
         </nav>
         {userId ? (

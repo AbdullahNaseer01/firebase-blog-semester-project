@@ -40,14 +40,16 @@ function App() {
 
   return (
     <>
+    <div className="layout">
     <Header user={user} handleLogout={handleLogout} />
+    <div className="content">
     <ToastContainer position="top-center" />
     <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/contact' element={<Contact/>}/>
-    <Route path='/create' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/"/>}/>
-    <Route path='/edit/:id' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/"/>}/>
+    <Route path='/create' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/auth"/>}/>
+    <Route path='/edit/:id' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/auth"/>}/>
     <Route path='/detail/:id' element={<Details/>}/>
     <Route
           path="/auth"
@@ -55,9 +57,13 @@ function App() {
         />
     <Route path='*' element={<NoteFound/>}/>
     </Routes>
- <Footer/>
+    </div>
+    <Footer/>
+    </div>
+    
  </>
   )
 }
 
 export default App
+
