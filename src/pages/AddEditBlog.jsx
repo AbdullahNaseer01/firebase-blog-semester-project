@@ -102,7 +102,6 @@ const AddEditBlog = ({ user }) => {
     if (snapshot.exists()) {
       setForm({ ...snapshot.data() });
     }
-    setActive(null);
   };
 
   const handleChange = (e) => {

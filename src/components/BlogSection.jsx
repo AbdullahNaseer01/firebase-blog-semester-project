@@ -125,7 +125,7 @@ const BlogSection = ({
                 className="text-md"
                 onClick={() => handleDelete(id)}
               />
-              <Link to={`/update/${id}`}>
+              <Link to={`/edit/${id}`}>
                 <FaEdit
                   style={{ cursor: "pointer" }}
                   className="text-md mt-4"
@@ -138,5 +138,4 @@ const BlogSection = ({
     </div>
   );
 };
-// console.log(userId)
 export default BlogSection;

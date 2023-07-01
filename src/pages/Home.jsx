@@ -241,5 +241,4 @@ const Home = ({ user, active }) => {
     </div>
   );
 };
-// console.log("home",user)
 export default Home;
