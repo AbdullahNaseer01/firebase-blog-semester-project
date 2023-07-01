@@ -123,7 +123,7 @@ const BlogSection = ({
               <FaTrash
                 style={{ margin: "15px", cursor: "pointer" }}
                 className="text-md"
-                onClick={() => handleDelete(item.id)}
+                onClick={() => handleDelete(id)}
               />
               <Link to={`/update/${id}`}>
                 <FaEdit
