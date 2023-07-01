@@ -70,7 +70,7 @@
 // export default BlogSection;
 
 import React, { useEffect } from "react";
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch,FaTrash,FaEdit } from 'react-icons/fa';
 import { BsArrowRight } from 'react-icons/bs';
 import { Link } from "react-router-dom";
 import { excerpt } from "../utility";
@@ -87,6 +87,8 @@ const BlogSection = ({
   user,
   handleDelete,
 }) => {
+  // const userId = user?.uid;
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 shadow-lg md:mr-2 " key={id}>
@@ -116,17 +118,17 @@ const BlogSection = ({
               <BsArrowRight className="inline-block ml-2" />
             </button>
           </Link>
-          {user && user.uid === userId && (
-            <div style={{ float: "right" }}>
+          { user && user.uid === userId &&   (
+            <div className="flex justify-center md:ml-20">
               <FaTrash
                 style={{ margin: "15px", cursor: "pointer" }}
-                size="2x"
-                onClick={() => handleDelete(id)}
+                className="text-md"
+                onClick={() => handleDelete(item.id)}
               />
               <Link to={`/update/${id}`}>
                 <FaEdit
                   style={{ cursor: "pointer" }}
-                  size="2x"
+                  className="text-md mt-4"
                 />
               </Link>
             </div>
@@ -136,5 +138,5 @@ const BlogSection = ({
     </div>
   );
 };
-
+// console.log(userId)
 export default BlogSection;

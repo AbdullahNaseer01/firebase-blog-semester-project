@@ -45,12 +45,12 @@ function App() {
     <div className="content">
     <ToastContainer position="top-center" />
     <Routes>
-    <Route path='/' element={<Home/>}/>
+    <Route path='/' element={<Home user={user} />}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/contact' element={<Contact/>}/>
     <Route path='/create' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/auth"/>}/>
     <Route path='/edit/:id' element={ user?.uid ? <AddEditBlog user={user} /> :<Navigate to="/auth"/>}/>
-    <Route path='/detail/:id' element={<Details/>}/>
+    <Route path='/detail/:id' element={<Details user={user}/>}/>
     <Route
           path="/auth"
           element={<Auth setUser={setUser} />}

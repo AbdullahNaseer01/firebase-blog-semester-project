@@ -159,7 +159,7 @@ const Home = ({ user, active }) => {
   }
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure wanted to delete that blog ?")) {
+    if (window.confirm("Are you sure want to delete that blog ?")) {
       try {
         setLoading(true);
         await deleteDoc(doc(db, "blogs", id));
@@ -239,5 +239,5 @@ const Home = ({ user, active }) => {
     </div>
   );
 };
-
+// console.log("home",user)
 export default Home;

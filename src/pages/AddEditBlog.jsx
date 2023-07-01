@@ -33,7 +33,7 @@ const categoryOption = [
   "Business",
 ];
 
-const AddEditBlog = ({ user, setActive }) => {
+const AddEditBlog = ({ user }) => {
   const [form, setForm] = useState(initialState);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
