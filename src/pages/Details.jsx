@@ -77,9 +77,7 @@ const Detail = ({ user }) => {
         where("tags", "array-contains-any", blogDetail.data().tags),
         limit(3)
       );
-      setComments(
-        blogDetail.data().comments ? blogDetail.data().comments : []
-      );
+      setComments(blogDetail.data().comments ? blogDetail.data().comments : []);
       setLikes(blogDetail.data().likes ? blogDetail.data().likes : []);
       const relatedBlogSnapshot = await getDocs(relatedBlogsQuery);
       const relatedBlogs = [];
@@ -134,59 +132,59 @@ const Detail = ({ user }) => {
   };
 
   return (
-    <div className="single">
-      <div
-        className="blog-title-box"
-        // style={{ backgroundImage: `url('${blog?.imgUrl}')` }}
-      >
-        <img className="w-64 h-64 md:w-1/2 md:h-auto mx-auto" src={blog?.imgUrl} alt="" />
-        <div className="overlay"></div>
-        <div className="container">
-          <div className="blog-title">
-            <span>{blog?.timestamp.toDate().toDateString()}</span>
-            <h2>{blog?.title}</h2>
-          </div>
-        </div>
-      </div>
-      <div className="container py-4">
-        <div className="row">
-          <div className="col-md-8">
-            <div className="meta-info">
-              By <span className="author">{blog?.author}</span> -{" "}
-              {blog?.timestamp.toDate().toDateString()}
-              <Like handleLike={handleLike} likes={likes} userId={userId} />
-            </div>
-            <p>{blog?.description}</p>
-            <div>
-              <Tags tags={blog?.tags} />
-            </div>
-            <div className="custombox">
-              <div className="scroll">
-                <h4 className="small-title">{comments?.length} Comment</h4>
-                {isEmpty(comments) ? (
-                  <UserComments
-                    msg="No comments yet posted on this blog. Be the first to comment."
-                  />
-                ) : (
-                  <>
-                    {comments?.map((comment, index) => (
-                      <UserComments key={index} {...comment} />
-                    ))}
-                  </>
-                )}
+    <div className="main">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="col-span-2">
+            <div className="bg-slate-400 p-4">
+              <div className="blog-title text-lg">
+                <span>{blog?.timestamp.toDate().toDateString()}</span>
+                <h2 className="text-4xl font-bold">{blog?.title}</h2>
               </div>
+              <div className="meta-info">
+                By <span className="author">{blog?.author}</span> -{" "}
+                {blog?.timestamp.toDate().toDateString()}
+                <Like handleLike={handleLike} likes={likes} userId={userId} />
+              </div>
+              <img
+                className="w-64 h-64 md:w-1/2 md:h-auto mx-auto"
+                src={blog?.imgUrl}
+                alt=""
+              />
+              <p>{blog?.description}</p>
+              <div>
+                <Tags tags={blog?.tags} />
+              </div>
+              <div className="custombox">
+                <div className="scroll">
+                  <h4 className="small-title">{comments?.length} Comment</h4>
+                  {isEmpty(comments) ? (
+                    <UserComments msg="No comments yet posted on this blog. Be the first to comment." />
+                  ) : (
+                    <>
+                      {comments?.map((comment, index) => (
+                        <UserComments key={index} {...comment} />
+                      ))}
+                    </>
+                  )}
+                </div>
+              </div>
+              <CommentBox
+                userId={userId}
+                userComment={userComment}
+                setUserComment={setUserComment}
+                handleComment={handleComment}
+              />
             </div>
-            <CommentBox
-              userId={userId}
-              userComment={userComment}
-              setUserComment={setUserComment}
-              handleComment={handleComment}
-            />
           </div>
-          <div className="col-md-4">
-            <div className="blog-heading py-2 mb-4">Tags</div>
-            <Tags tags={tags} />
-            <FeatureBlogs title="Recent Blogs" blogs={blogs} />
+          <div>
+            <div className="bg-slate-400 p-4">
+              <div className="blog-heading py-2 mb-4">Tags</div>
+              <Tags tags={tags} />
+            </div>
+            <div className="bg-slate-400 p-4">
+              <FeatureBlogs title="Recent Blogs" blogs={blogs} />
+            </div>
           </div>
         </div>
       </div>
