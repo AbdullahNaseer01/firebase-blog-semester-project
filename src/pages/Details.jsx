@@ -139,7 +139,7 @@ const Detail = ({ user }) => {
         className="blog-title-box"
         // style={{ backgroundImage: `url('${blog?.imgUrl}')` }}
       >
-        <img className=" md:w-1/2 mx-auto" src={blog?.imgUrl} alt="" />
+        <img className="w-64 h-64 md:w-1/2 md:h-auto mx-auto" src={blog?.imgUrl} alt="" />
         <div className="overlay"></div>
         <div className="container">
           <div className="blog-title">
