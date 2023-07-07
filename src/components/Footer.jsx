@@ -9,12 +9,12 @@ const Footer = () => {
     <img src={logo} alt="img" className="w-40 h-10" />
     </a>
     <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-      © 2023 Blog bliss —
+      © 2023 Blog Bliss —
       <a
         href="https://twitter.com/knyttneve"
         className="text-gray-600 ml-1"
         rel="noopener noreferrer"
-        target="_blank"
+        target="_blank" 
       >
         All Rights Reseved
       </a>
