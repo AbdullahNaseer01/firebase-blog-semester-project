@@ -136,7 +136,7 @@ const Detail = ({ user }) => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-2">
-            <div className="bg-slate-400 p-4">
+            <div className=" p-4 shadow-xl text-center">
               <div className="blog-title text-lg">
                 <span>{blog?.timestamp.toDate().toDateString()}</span>
                 <h2 className="text-4xl font-bold">{blog?.title}</h2>
@@ -155,7 +155,7 @@ const Detail = ({ user }) => {
               <div>
                 <Tags tags={blog?.tags} />
               </div>
-              <div className="custombox">
+              <div className="custombo">
                 <div className="scroll">
                   <h4 className="small-title">{comments?.length} Comment</h4>
                   {isEmpty(comments) ? (
@@ -169,20 +169,20 @@ const Detail = ({ user }) => {
                   )}
                 </div>
               </div>
-              <CommentBox
+              <div className="commentBox flex justify-center"><CommentBox
                 userId={userId}
                 userComment={userComment}
                 setUserComment={setUserComment}
                 handleComment={handleComment}
-              />
+              /></div>
             </div>
           </div>
           <div>
-            <div className="bg-slate-400 p-4">
+            <div className="p-4">
               <div className="blog-heading py-2 mb-4">Tags</div>
               <Tags tags={tags} />
             </div>
-            <div className="bg-slate-400 p-4">
+            <div className="p-4 shadow-lg">
               <FeatureBlogs title="Recent Blogs" blogs={blogs} />
             </div>
           </div>
