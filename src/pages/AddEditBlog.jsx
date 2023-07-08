@@ -276,23 +276,14 @@ const AddEditBlog = ({ user }) => {
                   </select>
                 </div>
                 <div className="mb-4">
-                  <Editor
-                    apiKey="4q3rvg7uaidu2b1zrughb11xna49no81n456ojnxojwp4r2j"
+                  <textarea
+                    type="text"
+                    className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-blue-400"
+                    placeholder="Discription"
+                    name="description"
+                    row="10"
                     value={description}
-                    init={{
-                      height: 300,
-                      menubar: false,
-                      plugins: [
-                        "advlist autolink lists link image charmap print preview anchor",
-                        "searchreplace visualblocks code fullscreen",
-                        "insertdatetime media table paste code help wordcount",
-                      ],
-                      toolbar:
-                        "undo redo | formatselect | bold italic backcolor | \
-                        alignleft aligncenter alignright alignjustify | \
-                        bullist numlist outdent indent | removeformat | help",
-                    }}
-                    onEditorChange={handleEditorChange}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="mb-4">
