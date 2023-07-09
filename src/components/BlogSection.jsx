@@ -102,8 +102,8 @@ const BlogSection = ({
         </div>
         <div>
           <div className="text-start">
-            <h6 className="category catg-color">{category}</h6>
-            <span className="title py-2">{title}</span>
+            <h6 className="category catg-color bg-red-300">{category}</h6>
+            <span className="title py-2 font-bold">{title}</span>
             <span className="meta-info">
               <p className="author">{author}</p> -&nbsp; 
               {timestamp.toDate().toDateString()}
