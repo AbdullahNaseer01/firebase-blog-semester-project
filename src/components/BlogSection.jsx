@@ -121,7 +121,7 @@ const BlogSection = ({
           { user && user.uid === userId &&   (
             <div className="flex justify-center md:ml-20">
               <FaTrash
-                style={{ margin: "15px", cursor: "pointer" }}
+                style={{ margin: "15px",  cursor: "pointer" }}
                 className="text-md"
                 onClick={() => handleDelete(id)}
               />
