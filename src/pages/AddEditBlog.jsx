@@ -495,57 +495,97 @@ const AddEditBlog = ({ user }) => {
   //   }
   // };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   // Check if all required form fields have values
+  //   if (category !== "" && tags !== "" && title !== "" && description !== "" && trending !== "") {
+  //     // Check if a user object exists
+  //     if (user) {
+  //       // Check if id is falsy, indicating the creation of a new blog
+  //       if (!id) {
+  //         try {
+  //           // Add a new document to the "blogs" collection
+  //           await addDoc(collection(db, "blogs"), {
+  //             ...form,
+  //             timestamp: serverTimestamp(),
+  //             author: user.displayName,
+  //             userId: user.uid,
+  //           });
+  //           toast.success("Blog created successfully");
+  
+  //           // Navigate to the root ("/") page
+  //           navigate("/");
+  //         } catch (err) {
+  //           console.log(err);
+  //           toast.error("Check your Internet Connection");
+  //         }
+  //       } else {
+  //         try {
+  //           // Update an existing document in the "blogs" collection
+  //           await updateDoc(doc(db, "blogs", id), {
+  //             ...form,
+  //             timestamp: serverTimestamp(),
+  //             author: user.displayName,
+  //             userId: user.uid,
+  //           });
+  //           toast.success("Blog updated successfully");
+  
+  //           // Navigate to the root ("/") page
+  //           navigate("/");
+  //         } catch (err) {
+  //           console.log(err);
+  //           toast.error("Check your Internet Connection");
+  //         }
+  //       }
+  //     } else {
+  //       // User not logged in, navigate to "/auth" page
+  //       toast.error("Login or Signup to perform this task");
+  //       navigate("/auth");
+  //     }
+  //   } else {
+  //     // Display an error message if any required field is missing
+  //     toast.error("All fields are mandatory to fill");
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Check if all required form fields have values
-    if (category !== "" && tags !== "" && title !== "" && description !== "" && trending !== "") {
-      // Check if a user object exists
-      if (user) {
-        // Check if id is falsy, indicating the creation of a new blog
-        if (!id) {
-          try {
-            // Add a new document to the "blogs" collection
-            await addDoc(collection(db, "blogs"), {
-              ...form,
-              timestamp: serverTimestamp(),
-              author: user.displayName,
-              userId: user.uid,
-            });
-            toast.success("Blog created successfully");
-  
-            // Navigate to the root ("/") page
-            navigate("/");
-          } catch (err) {
-            console.log(err);
-            toast.error("Check your Internet Connection");
-          }
-        } else {
-          try {
-            // Update an existing document in the "blogs" collection
-            await updateDoc(doc(db, "blogs", id), {
-              ...form,
-              timestamp: serverTimestamp(),
-              author: user.displayName,
-              userId: user.uid,
-            });
-            toast.success("Blog updated successfully");
-  
-            // Navigate to the root ("/") page
-            navigate("/");
-          } catch (err) {
-            console.log(err);
-            toast.error("Check your Internet Connection");
-          }
-        }
-      } else {
-        // User not logged in, navigate to "/auth" page
-        toast.error("Login or Signup to perform this task");
-        navigate("/auth");
+    try {
+      // Check if all required form fields have values
+      if (category === "" || tags === "" || title === "" || description === "" || trending === "") {
+        throw new Error("All fields are mandatory to fill");
       }
-    } else {
-      // Display an error message if any required field is missing
-      toast.error("All fields are mandatory to fill");
+  
+      // Check if a user object exists
+      if (!user) {
+        // User not logged in, navigate to "/auth" page
+        throw new Error("Login or Signup to perform this task");
+      }
+  
+      const blogData = {
+        ...form,
+        timestamp: serverTimestamp(),
+        author: user.displayName,
+        userId: user.uid,
+      };
+  
+      // Check if id is falsy, indicating the creation of a new blog
+      if (!id) {
+        // Add a new document to the "blogs" collection
+        await addDoc(collection(db, "blogs"), blogData);
+        toast.success("Blog created successfully");
+      } else {
+        // Update an existing document in the "blogs" collection
+        await updateDoc(doc(db, "blogs", id), blogData);
+        toast.success("Blog updated successfully");
+      }
+  
+      // Navigate to the root ("/") page
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      toast.error("An error occurred. Please try again later.");
     }
   };
   
