@@ -163,10 +163,11 @@ const AddEditBlog = ({ user }) => {
       navigate("/");
     } catch (err) {
       console.log(err);
-      toast.error("An error occurred. Please try again later.");
+      toast.error("Fill all the fields and try again.");
     }
   };
-  
+
+ 
 
   return (
     <>
